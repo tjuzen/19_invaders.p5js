@@ -2,20 +2,25 @@ function Shoot(x, y)
 {
     this.x = x;
     this.y = y;
-    this.dead = 255;
     this.size = 20;
+	this.dead = false;
 
     this.display = function() {
-        fill(this.dead,this.dead, 0);
+		if (this.y < 0) {
+			this.dead = true;
+		}
+        fill(255,this.dead, 0);
         ellipse(this.x, this.y, this.size, this.size);
+		stroke(random(255));
+		line(this.x, this.y, random(width),random(height));
     }
 
     this.move = function() {
-        this.y  = this.y - 1;
+        this.y  = this.y - 10;
     }
 
     this.die = function() {
-        this.dead = 0;
+        this.dead = true;
     }
 
     this.touch = function(cibles) {
