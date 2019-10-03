@@ -1,8 +1,15 @@
 var ship;
 var cibles = [];
 var shoots = [];
+var start = 0;
+var col = 0;
+var time_bg;
 // var picture = [];
+
 var picture;
+
+var timeoutID;
+
 
 function preload() {
 	// for (i = 0; i < 2 ;i++) {
@@ -12,71 +19,55 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(1000, 1000);
-    ship = new Ship();
-    add_ship();
+    createCanvas(600, 600);
+	// timeoutID = setTimeout(start_game, 3000);
 }
 
+function start_game() {
+	ship = new Ship();
+	for (var i = 0; i < 36; i++) {
+		cibles[i] = new Cible(i);
+	}
+	start = 1;
+}
 
 function draw() {
-    background(0);
-	ship_display();
-	cibles_display();
-	cibles_kill();
-	destroy_cibles();
+	frameRate(20);
+	background(col);
+	// changecolor();
+	if (start == 0) {
+		wait_for_start();
+	}
+	else if (start == 1) {
+		cibles_display();
+		ship_display();
+		cibles_kill();
+		destroy_cibles();
+	}
+	let fps = frameRate();
+	fill(255);
+	stroke(0);
+	text("FPS: " + fps.toFixed(2), 10, height - 10);
 }
 
-function add_ship()
-{
-	for (var i = 0; i < 12; i++) {
-        cibles[i] = new Cible(i*80+80, 60);
-    }
+function wait_for_start() {
+	noStroke();
+	fill(255);
+	textSize(60);
+	text('click to start', width/2-150, height/2-30);
 }
 
-function cibles_kill() {
-	for (var i = cibles.length-1; i >= 0; i--) {
-			cibles[i].kill(ship);
-    	}
-  	}
-
-function destroy_cibles() {
-	for (var i = 0; i < shoots.length; i++) {
-   		shoots[i].display();
-   		shoots[i].move();
-   		for (var j = 0; j < cibles.length; j++) {
-	 		if (shoots[i].touch(cibles[j])) {
-	   			cibles[j].die();
-	   			shoots[i].die();
-	 		}
-
-   		}
- 	}
-	for (var i = shoots.length-1; i >= 0; i--) {
-    	if (shoots[i].dead) {
-      		shoots.splice(i, 1);
-    	}
-  	}
-	for (var i = cibles.length-1; i >= 0; i--) {
-    	if (cibles[i].dead) {
-      		cibles.splice(i, 1);
-    	}
-  	}
+function changecolor() {
+	col = random(250);
+	console.log("Three seconds have elapsed.");
 }
 
-function cibles_display() {
-	for (var i = cibles.length-1; i >= 0; i--) {
-      	cibles[i].display();
-  	}
+function mouseClicked() {
+	start_game();
 }
-
-function ship_display() {
-	ship.display();
-	ship.move();
-}
-
 function keyReleased() {
 	if (key != ' ') {
-		ship.move(0);
+		ship.dir(0);
 	}
 }
 
@@ -85,9 +76,9 @@ function keyPressed() {
     if (key === ' ') {
         var shoot = new Shoot(ship.x, ship.y);
         shoots.push(shoot);
-    } else if (keyCode === RIGHT_ARROW) {
-        ship.dir(5);
-    } else if (keyCode === LEFT_ARROW){
-        ship.dir(-5);
+    } if (keyCode === RIGHT_ARROW) {
+        ship.dir(2);
+    }  if (keyCode === LEFT_ARROW){
+        ship.dir(-2);
     }
 }
