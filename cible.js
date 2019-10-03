@@ -1,23 +1,7 @@
-function Cible(i)
+function Cible()
 {
-    if (i < 9 && i >= 0) {
-    this.x = i*60+60;
-    this.startx = i*60+60;
-    this.y = 100;
-} else if (i < 18 && i >= 9) {
-    this.x = (i - 9)*60+60;
-    this.startx = (i-9)*60+60;
-    this.y = 150;
-} else if (i < 27 && i >= 18)
-{
-    this.x = (i - 18)*60+60;
-    this.startx = (i - 18)*60+60;
-    this.y = 200;
-} else if (i < 36 && i >= 27) {
-    this.x = (i - 27)*60+60;
-    this.startx = ((i - 27)*60+60)/i;
-    this.y = 250;
-}
+    this.x = random(50, width-50);
+    this.y = 0;
     this.dead = false;
     this.size = 40;
 	this.dir = 5;
@@ -31,31 +15,11 @@ function Cible(i)
 		if (this.y > height) {
 			this.dead = true;
 		}
-		picture.resize(40, 40);
+		ennemi_img.resize(60, 60);
 		imageMode(CENTER);
-        image(picture, this.x, this.y);
-        console.log(this.x, this.startx, this.count)
-        this.x += this.dir;
-		if (this.x <= 0) {
-			this.dir = 5;
-			this.y += 40;
-		}
-		else if (this.x >= width) {
-			this.dir = -5;
-			this.y += 40;
-		}
-
+        image(ennemi_img, this.x, this.y);
+		this.y += 5;
     }
-
-	this.kill = function(ship) {
-		// if (this.shoot > 0) {
-            this.shootposx = ship.x;
-			this.shootposy = ship.y;
-			stroke(255, 0, 0);
-			line(this.x, this.y, this.x, this.shootposy);
-			this.shoot--;
-		// }
-	}
 
     this.die = function() {
         this.dead = true;
@@ -70,9 +34,20 @@ function destroy_cibles() {
 	 		if (shoots[i].touch(cibles[j])) {
 	   			cibles[j].die();
 	   			shoots[i].die();
+                score += 100;
 	 		}
-
    		}
+ 	}
+
+    for (var i = 0; i < ennemishoots.length; i++) {
+   		ennemishoots[i].display();
+   		ennemishoots[i].move();
+	 	if (ennemishoots[i].touch(ship)) {
+            start = 2;
+	   		ennemishoots[i].die();
+	   		ship.die();
+            break;
+	 	}
  	}
 	for (var i = shoots.length-1; i >= 0; i--) {
     	if (shoots[i].dead) {
@@ -87,13 +62,17 @@ function destroy_cibles() {
 }
 
 function cibles_display() {
+    if (counter%20 == 0) {
+        var cible = new Cible();
+        cibles.push(cible);
+    }
 	for (var j = 0; j < cibles.length; j++) {
+        if (cibles[j].y > height) {
+            ship.die();
+            start = 2;
+            break;
+        }
       	cibles[j].display();
   	}
+    counter++;
 }
-
-function cibles_kill() {
-	for (var i = cibles.length-1; i >= 0; i--) {
-			cibles[i].kill(ship);
-    	}
-  	}

@@ -2,21 +2,20 @@ function Shoot(x, y)
 {
     this.x = x;
     this.y = y;
-    this.size = 20;
+    this.size = 30;
 	this.dead = false;
 
     this.display = function() {
 		if (this.y < 0) {
 			this.dead = true;
 		}
-        fill(255,this.dead, 0);
-        ellipse(this.x, this.y, this.size, this.size);
-		stroke(random(255));
-		line(this.x, this.y, random(width),random(height));
+        shoot_img.resize(this.size, this.size);
+		imageMode(CENTER);
+        image(shoot_img, this.x, this.y);
     }
 
     this.move = function() {
-        this.y  = this.y - 10;
+        this.y  = this.y - 20;
     }
 
     this.die = function() {

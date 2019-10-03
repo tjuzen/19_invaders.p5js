@@ -1,84 +1,76 @@
+// List of my objects
+
 var ship;
 var cibles = [];
 var shoots = [];
+var ennemishoots = [];
+
+// State of the game
+
 var start = 0;
-var col = 0;
-var time_bg;
-// var picture = [];
 
-var picture;
+// img for objects
 
-var timeoutID;
+var ship_img;
+var ennemi_img;
+var shoot_img;
+var hadoken_img;
 
+// counter to create ennemi shoot
+
+var counter = 0;
+
+// for the background
+
+var stars = [];
+var speed = 15;
+
+// for the informations about the game
+
+var score = 0;
 
 function preload() {
-	// for (i = 0; i < 2 ;i++) {
-	// 	picture = loadImage('images/theo${i}.jpg');
-	// }
-	picture = loadImage('images/theo0.jpg');
+	ennemi_img = loadImage('images/enemy.png');
+	ship_img = loadImage('images/ship.png');
+	shoot_img = loadImage('images/shoot.png');
+	hadoken_img = loadImage('images/hadouken.png');
 }
 
 function setup() {
     createCanvas(600, 600);
-	// timeoutID = setTimeout(start_game, 3000);
-}
-
-function start_game() {
-	ship = new Ship();
-	for (var i = 0; i < 36; i++) {
-		cibles[i] = new Cible(i);
-	}
-	start = 1;
+	for (var i = 0; i < 400; i++) {
+    stars[i] = new Star();
+  }
 }
 
 function draw() {
 	frameRate(20);
-	background(col);
-	// changecolor();
+	background(0);
 	if (start == 0) {
+		background(0);
 		wait_for_start();
 	}
 	else if (start == 1) {
-		cibles_display();
-		ship_display();
-		cibles_kill();
-		destroy_cibles();
+		play();
 	}
-	let fps = frameRate();
-	fill(255);
-	stroke(0);
-	text("FPS: " + fps.toFixed(2), 10, height - 10);
-}
-
-function wait_for_start() {
-	noStroke();
-	fill(255);
-	textSize(60);
-	text('click to start', width/2-150, height/2-30);
-}
-
-function changecolor() {
-	col = random(250);
-	console.log("Three seconds have elapsed.");
-}
-
-function mouseClicked() {
-	start_game();
-}
-function keyReleased() {
-	if (key != ' ') {
-		ship.dir(0);
+	else if (start == 2) {
+		end_game();
 	}
+	show_fps();
 }
 
-function keyPressed() {
+function start_game() {
+	ship = new Ship();
+	start = 1;
+}
 
-    if (key === ' ') {
-        var shoot = new Shoot(ship.x, ship.y);
-        shoots.push(shoot);
-    } if (keyCode === RIGHT_ARROW) {
-        ship.dir(2);
-    }  if (keyCode === LEFT_ARROW){
-        ship.dir(-2);
-    }
+function play() {
+  	background(0);
+	cibles_display();
+	ship_display();
+	cibles_shoot();
+	destroy_cibles();
+	display_score();
+	show_fps();
+	starsbg();
 }
