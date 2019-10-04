@@ -31,6 +31,7 @@ var speed = 15;
 var score = 0;
 
 var listen = 0;
+var song;
 
 function preload() {
 	ennemi_img = loadImage('images/enemy.png');
@@ -38,23 +39,24 @@ function preload() {
 	shoot_img = loadImage('images/shoot.png');
 	hadoken_img = loadImage('images/hadouken.png');
 	click_img = loadImage('images/click.png');
+	song = loadSound('musique2.mp3');
 }
 
 function setup() {
     createCanvas(600, 600);
-
-	let lang = navigator.language || 'en-US'
-	let speechRec = new p5.SpeechRec(lang, gotSpeech);
-	let continuous = true;
-	let interim = true;
-
-	speechRec.start(continuous, interim);
-	function gotSpeech() {
-		if (speechRec.resultValue) {
-			listen = (speechRec.resultString) + ' ';
-		}
-		console.log(listen);
-	}
+	song.play();
+	// let lang = navigator.language || 'en-US'
+	// let speechRec = new p5.SpeechRec(lang, gotSpeech);
+	// let continuous = true;
+	// let interim = true;
+	//
+	// speechRec.start(continuous, interim);
+	// function gotSpeech() {
+	// 	if (speechRec.resultValue) {
+	// 		listen = (speechRec.resultString) + ' ';
+	// 	}
+	// 	console.log(listen);
+	// }
 	for (var i = 0; i < 400; i++) {
     stars[i] = new Star();
   }

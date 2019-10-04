@@ -18,7 +18,7 @@ function Cible()
 		ennemi_img.resize(60, 60);
 		imageMode(CENTER);
         image(ennemi_img, this.x, this.y);
-		this.y += 5;
+		this.y += 15;
     }
 
     this.die = function() {

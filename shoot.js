@@ -15,7 +15,7 @@ function Shoot(x, y)
     }
 
     this.move = function() {
-        this.y  = this.y - 20;
+        this.y  = this.y - 40;
     }
 
     this.die = function() {

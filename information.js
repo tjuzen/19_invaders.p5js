@@ -12,7 +12,7 @@ function end_game() {
 	textSize(80);
 	text('U SUCK', width/2-150, height/2+20);
 	display_score();
-	createP(listen);
+	reset_var();
 }
 
 function wait_for_start() {
@@ -26,4 +26,11 @@ function display_score() {
 	stroke(0);
 	textSize(20);
 	text("SCORE: " + score, 0+20, 30);
+}
+
+function reset_var() {
+	cibles.splice(0, cibles.length);
+	shoots.splice(0, shoots.length);
+	ennemishoots.splice(0, ennemishoots.length);
+	score = 0;
 }

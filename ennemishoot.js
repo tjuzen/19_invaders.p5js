@@ -9,13 +9,13 @@ function Ennemishoot(x, y)
 		if (this.y > width) {
 			this.dead = true;
 		}
-        hadoken_img.resize(this.size, this.size + 40);
+        hadoken_img.resize(this.size/2, this.size/2 + 20);
 		imageMode(CENTER);
         image(hadoken_img, this.x, this.y);
     }
 
     this.move = function() {
-        this.y  = this.y + 10;
+        this.y  = this.y + 20;
     }
 
     this.die = function() {
@@ -35,7 +35,7 @@ function Ennemishoot(x, y)
 
 function cibles_shoot() {
     for (var i = cibles.length-1; i >= 0; i--) {
-            if (cibles[i].y == 20) {
+            if (cibles[i].y == 15) {
                 var ennemishoot = new Ennemishoot(cibles[i].x, cibles[i].y);
                 ennemishoots.push(ennemishoot);
             }

@@ -1,5 +1,5 @@
 function mouseClicked() {
-	if (start == 0) {
+	if (start == 0 || start == 2) {
 		start_game();
 	}
 }
