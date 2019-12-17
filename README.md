@@ -1,4 +1,4 @@
-# 19_invaders.p5js
+# space_invaders.p5js
 
 Creating a space invaders in p5.js
 
